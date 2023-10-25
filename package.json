@@ -13,7 +13,7 @@
     "push:dev": "dscc-scripts viz push -d dev",
     "push:prod": "dscc-scripts viz push -d prod",
     "update_message": "dscc-scripts viz update_message -f object",
-    "start": "dscc-scripts viz start"
+    "start": "webpack-dev-server --host=0.0.0.0"
   },
   "devDependencies": {
     "@google/dscc": "^0.3.8",
