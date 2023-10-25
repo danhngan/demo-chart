@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "id": "dimension",
+      "label": "dimension",
+      "elements": [
+        {
+          "id": "xDim",
+          "label": "Horizontal dimension",
+          "type": "DIMENSION",
+          "options": {
+            "min": 0,
+            "max": 0
+          }
+        },
+        {
+          "id": "yDim",
+          "label": "Vertical dimension",
+          "type": "DIMENSION",
+          "options": {
+            "min": 0,
+            "max": 0
+          }
+        }
+      ]
+    }
+  ],
+  "style": []
+}

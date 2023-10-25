@@ -16,12 +16,12 @@ This template provides
 To develop your visualization, you should be editing the files in the [./src]
 directory.
 
-File       | Template location   | Documentation
----------- | ------------------- | --------------------
-Manifest   | `src/manifest.json` | [manifest reference]
-Config     | `src/index.json`    | [config reference]
-JavaScript | `src/index.js`      | [write viz code]
-CSS        | `src/index.css`     | [write css code]
+| File       | Template location   | Documentation        |
+| ---------- | ------------------- | -------------------- |
+| Manifest   | `src/manifest.json` | [manifest reference] |
+| Config     | `src/index.json`    | [config reference]   |
+| JavaScript | `src/index.js`      | [write viz code]     |
+| CSS        | `src/index.css`     | [write css code]     |
 
 ## Using this template
 
@@ -117,3 +117,5 @@ The `build` and `deploy` scripts can be found in the `./scripts/bin` directory.
 [write viz code]: https://developers.google.com/datastudio/visualization/write-viz
 [ds-component]: https://developers.google.com/datastudio/visualization/library-reference
 [caching]: https://developers.google.com/datastudio/visualization/caching
+
+npm version: 6.14.6

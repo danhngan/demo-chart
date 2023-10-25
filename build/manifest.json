@@ -1,0 +1,24 @@
+{
+  "name": "My Visualizations",
+  "organization": "MyOrg",
+  "description": "My first visualization package.",
+  "logoUrl": "",
+  "organizationUrl": "",
+  "supportUrl": "",
+  "privacyPolicyUrl": "",
+  "termsOfServiceUrl": "",
+  "packageUrl": "",
+  "devMode": true,
+  "components": [
+    {
+      "name": "myScatter",
+      "description": "My first Community Visualization",
+      "iconUrl": "",
+      "resource": {
+        "js": "gs://my-custom-charts/demo-chart/index.js",
+        "config": "gs://my-custom-charts/demo-chart/index.json",
+        "css": "gs://my-custom-charts/demo-chart/index.css"
+      }
+    }
+  ]
+}

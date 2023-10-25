@@ -15,8 +15,9 @@ const n = 10
 export var message = { tables: { DEFAULT: [] } }
 for (let i = 0; i < n; i++) {
   message.tables.DEFAULT.push({
-    dimID: [dateToString(new Date(i * 24 * 3600000 + 1697414400000))],
-    metricID: [Math.random() * 1000]
+    // xDim: [dateToString(new Date(i * 24 * 3600000 + 1697414400000))],
+    xDim: [Math.random() * 1000],
+    yDim: [Math.random() * 1000],
   })
 };
 // export const message = {
