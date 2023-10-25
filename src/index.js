@@ -2,6 +2,12 @@ const dscc = require('@google/dscc');
 const viz = require('@google/dscc-scripts/viz/initialViz.js');
 const local = require('./localMessage.js');
 const Plotly = require('plotly.js-dist');
+const dateToString = function (dateValue) {
+  const day = dateValue.toLocaleString('en-US', { day: '2-digit' });
+  const month = dateValue.toLocaleString('en-US', { month: '2-digit' });
+  const year = dateValue.toLocaleString('en-US', { year: '2-digit' });
+  return '20' + year + month + day
+};
 
 // change this to 'true' for local development
 // change this to 'false' before deploying
@@ -15,14 +21,16 @@ const getWindowSize = function () {
 const drawViz = (records) => {
   console.time("test_timer");
 
+  // create chart space
   const { width, height } = getWindowSize();
   console.log(width, height);
   const dataviz = document.createElement('div');
   dataviz.setAttribute('id', 'my_dataviz');
   document.body.appendChild(dataviz);
-  const xDim = [];
-  const yDim = [];
-  records['tables']['DEFAULT'].forEach((a) => { xDim.push(a['xDim'][0]); yDim.push(a['yDim'][0]) })
+
+  // process data
+  const xDim = records['tables']['DEFAULT'].map((a) => a['xDim'][0]);
+  const yDim = records['tables']['DEFAULT'].map((a) => a['yDim'][0]);
   const data = [{
     type: 'scatter',
     mode: 'markers',
@@ -30,7 +38,7 @@ const drawViz = (records) => {
     y: yDim
   }]
   const layout = {
-    xaxis: { title: 'metricOne', color: 'red' },
+    xaxis: { title: 'metricOne', color: 'blue' },
     yaxis: { title: 'metricTwo', color: 'blue' },
     width: width,
     height: height,
@@ -42,6 +50,7 @@ const drawViz = (records) => {
     }
   }
 
+  // plot
   Plotly.newPlot(dataviz, data, layout,
     { showSendToCloud: true });
   console.timeEnd("test_timer");
