@@ -6,8 +6,26 @@
       "elements": [
         {
           "id": "xDim",
-          "label": "Data",
+          "label": "Dimensions",
           "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        {
+          "id": "cDim",
+          "label": "Color Dimension",
+          "type": "DIMENSION",
+          "options": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        {
+          "id": "histData",
+          "label": "Metric",
+          "type": "METRIC",
           "options": {
             "min": 1,
             "max": 1
@@ -16,5 +34,18 @@
       ]
     }
   ],
-  "style": []
+  "style": [
+    {
+      "id": "colors",
+      "label": "Highlight Colors",
+      "elements": [
+        {
+          "id": "colorMap",
+          "label": "Json color map",
+          "type": "TEXTAREA",
+          "defaultValue": ""
+        }
+      ]
+    }
+  ]
 }
