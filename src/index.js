@@ -2,12 +2,6 @@ const dscc = require('@google/dscc');
 const viz = require('@google/dscc-scripts/viz/initialViz.js');
 const local = require('./localMessage.js');
 const Plotly = require('plotly.js-dist');
-const dateToString = function (dateValue) {
-  const day = dateValue.toLocaleString('en-US', { day: '2-digit' });
-  const month = dateValue.toLocaleString('en-US', { month: '2-digit' });
-  const year = dateValue.toLocaleString('en-US', { year: '2-digit' });
-  return '20' + year + month + day
-};
 
 // change this to 'true' for local development
 // change this to 'false' before deploying
@@ -24,26 +18,27 @@ const drawViz = (records) => {
   // create chart space
   const { width, height } = getWindowSize();
   console.log(width, height);
-  const dataviz = document.createElement('div');
-  dataviz.setAttribute('id', 'my_dataviz');
-  document.body.appendChild(dataviz);
-
+  var dataviz = document.getElementById('my_dataviz')
+  if (!dataviz) {
+    dataviz = document.createElement('div');
+    dataviz.setAttribute('id', 'my_dataviz');
+    document.body.appendChild(dataviz);
+  }
   // process data
   const xDim = records['tables']['DEFAULT'].map((a) => a['xDim'][0]);
-  const yDim = records['tables']['DEFAULT'].map((a) => a['yDim'][0]);
   const data = [{
-    type: 'scatter',
-    mode: 'markers',
-    x: xDim,
-    y: yDim
+    type: 'histogram',
+    marker: {
+      color: 'green',
+    },
+    x: xDim
   }]
   const layout = {
-    xaxis: { title: 'metricOne', color: 'blue' },
-    yaxis: { title: 'metricTwo', color: 'blue' },
-    width: width,
-    height: height,
+    yaxis: { title: 'Count' },
+    // width: width,
+    // height: height,
     margin: {
-      l: 0.05 * width,
+      l: 0.1 * width,
       r: 0.05 * width,
       b: 0.05 * height,
       t: 0.1 * height
@@ -51,8 +46,7 @@ const drawViz = (records) => {
   }
 
   // plot
-  Plotly.newPlot(dataviz, data, layout,
-    { showSendToCloud: true });
+  Plotly.newPlot(dataviz, data, layout, { responsive: true });
   console.timeEnd("test_timer");
 };
 

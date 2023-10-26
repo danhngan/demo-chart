@@ -6,20 +6,11 @@
       "elements": [
         {
           "id": "xDim",
-          "label": "Horizontal dimension",
+          "label": "Data",
           "type": "DIMENSION",
           "options": {
-            "min": 0,
-            "max": 0
-          }
-        },
-        {
-          "id": "yDim",
-          "label": "Vertical dimension",
-          "type": "DIMENSION",
-          "options": {
-            "min": 0,
-            "max": 0
+            "min": 1,
+            "max": 1
           }
         }
       ]

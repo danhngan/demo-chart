@@ -11,8 +11,8 @@
   "devMode": true,
   "components": [
     {
-      "name": "myScatter",
-      "description": "My first Community Visualization",
+      "name": "DNJ Histogram",
+      "description": "Histogram",
       "iconUrl": "",
       "resource": {
         "js": "gs://my-custom-charts/demo-chart/index.js",

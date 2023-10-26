@@ -11,8 +11,8 @@
   "devMode": "DEVMODE_BOOL",
   "components": [
     {
-      "name": "myScatter",
-      "description": "My first Community Visualization",
+      "name": "DNJ Histogram",
+      "description": "Histogram",
       "iconUrl": "",
       "resource": {
         "js": "YOUR_GCS_BUCKET/index.js",
