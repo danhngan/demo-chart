@@ -41,8 +41,7 @@ const getTraces = function (data, cDim = 'cDim', metric = 'histData') {
         marker: {
           color: getDefaultColors(1),
         },
-        x: traces[c],
-        opacity: 0.5
+        x: traces[c]
       })
     }
     return res
@@ -54,8 +53,7 @@ const getTraces = function (data, cDim = 'cDim', metric = 'histData') {
       marker: {
         color: getDefaultColors(1),
       },
-      x: data.map((row) => row[metric][0]),
-      opacity: 1
+      x: data.map((row) => row[metric][0])
     }]
   }
 }
@@ -75,9 +73,11 @@ const drawViz = (records) => {
     document.body.appendChild(dataviz);
   }
   // process data
-
   const data = getTraces(records['tables']['DEFAULT']);
+
+  // process style
   let colorMap = records['style']['colorMap']['value'] ? JSON.parse(records['style']['colorMap']['value']) : null;
+  let opacity = records['style']['opacity']['value'] ? records['style']['opacity']['value'] : records['style']['opacity']['defaultValue']
   let cats = data.map((d) => d['name'])
   if (!colorMap) {
     let tempColor = getDefaultColors(data.length, records['theme'])
@@ -86,6 +86,7 @@ const drawViz = (records) => {
   }
   for (let i in data) {
     data[i]['marker']['color'] = colorMap[data[i]['name']]
+    data[i]['opacity'] = opacity
   }
   const layout = {
     barmode: 'overlay',

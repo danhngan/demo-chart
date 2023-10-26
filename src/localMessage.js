@@ -153,6 +153,10 @@ message['style'] = {
   colorMap: {
     value: "{\"a\":\"#00ff00\",\"b\":\"#0000ff\",\"c\":\"#ff00ff\"}",
     defauleValue: ""
+  },
+  opacity: {
+    value: 0.7,
+    defaultValue: 1.
   }
 }
 const catValues = ['a', 'b', 'c'];

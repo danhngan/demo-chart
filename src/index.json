@@ -36,14 +36,19 @@
   ],
   "style": [
     {
-      "id": "colors",
-      "label": "Highlight Colors",
+      "id": "barAttrs",
+      "label": "Bar attributes",
       "elements": [
         {
           "id": "colorMap",
           "label": "Json color map",
           "type": "TEXTAREA",
           "defaultValue": ""
+        },
+        {
+          "id": "opacity",
+          "label": "Opacity",
+          "type": "OPACITY"
         }
       ]
     }
