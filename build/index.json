@@ -51,6 +51,18 @@
           "type": "OPACITY"
         }
       ]
+    },
+    {
+      "id": "title",
+      "label": "Title",
+      "elements": [
+        {
+          "id": "titleText",
+          "label": "Title",
+          "type": "TEXTINPUT",
+          "defaultValue": ""
+        }
+      ]
     }
   ]
 }

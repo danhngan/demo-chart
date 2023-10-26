@@ -88,6 +88,8 @@ const drawViz = (records) => {
     data[i]['marker']['color'] = colorMap[data[i]['name']]
     data[i]['opacity'] = opacity
   }
+
+  // layout
   const layout = {
     barmode: 'overlay',
     yaxis: { title: 'Count' },
@@ -100,6 +102,15 @@ const drawViz = (records) => {
       t: 0.1 * height
     }
   }
+
+  // title
+  if (records['style']['titleText']['value']) {
+    layout['title'] = {
+      text: records['style']['titleText']['value'],
+      x: 0.05,
+    }
+  }
+
 
   // plot
   Plotly.newPlot(dataviz, data, layout, { responsive: true });
