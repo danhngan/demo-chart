@@ -61,6 +61,32 @@
           "label": "Title",
           "type": "TEXTINPUT",
           "defaultValue": ""
+        },
+        {
+          "id": "titleFontSize",
+          "label": "Title font size",
+          "type": "FONT_SIZE"
+        },
+        {
+          "id": "xAxisTitleText",
+          "label": "X axis title",
+          "type": "TEXTINPUT"
+        },
+        {
+          "id": "yAxisTitleText",
+          "label": "Y axis title",
+          "type": "TEXTINPUT"
+        },
+        {
+          "id": "axesTitleFontSize",
+          "label": "Axes title font size",
+          "type": "FONT_SIZE"
+        },
+        {
+          "id": "titleFont",
+          "label": "Font for all titles",
+          "type": "FONT_FAMILY",
+          "defaultValue": "Arial"
         }
       ]
     }

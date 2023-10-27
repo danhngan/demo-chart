@@ -151,12 +151,36 @@ message['theme'] = {
 }
 message['style'] = {
   colorMap: {
-    value: "{\"a\":\"#00ff00\",\"b\":\"#0000ff\",\"c\":\"#ff00ff\"}",
+    value: "",
+    // value: "{\"a\":\"#00ff00\",\"b\":\"#0000ff\",\"c\":\"#ff00ff\"}",
     defauleValue: ""
   },
   opacity: {
-    value: 0.7,
+    value: 1.,
     defaultValue: 1.
+  },
+  titleText: {
+    value: "Histogram",
+    defaultValue: ""
+  },
+  titleFontSize: {
+    value: 16,
+    defaultValue: 12
+  },
+  xAxisTitleText: {
+    defaultValue: ""
+  },
+  yAxisTitleText: {
+    value: "Count",
+    defaultValue: ""
+  },
+  axesTitleFontSize: {
+    value: 10,
+    defaultValue: 12
+  },
+  titleFont: {
+    value: 'arial',
+    defaultValue: 'arial'
   }
 }
 const catValues = ['a', 'b', 'c'];
@@ -164,7 +188,7 @@ for (let i = 0; i < n; i++) {
   message.tables.DEFAULT.push({
     // xDim: [dateToString(new Date(i * 24 * 3600000 + 1697414400000))],
     xDim: [Math.random() * 100, Math.random() * 100, Math.random() * 100],
-    cDim: [catValues[Math.floor(Math.random() * catValues.length)]],
+    // cDim: [catValues[Math.floor(Math.random() * catValues.length)]],
     histData: [Math.random() * 100],
   })
 };

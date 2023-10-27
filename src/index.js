@@ -7,20 +7,47 @@ const Plotly = require('plotly.js-dist');
 // change this to 'false' before deploying
 export const LOCAL = false;
 
+const TITLE_ATTRS = { text: 'titleText', font: { family: 'titleFont', size: 'titleFontSize' } }
+const X_AXIS_ATTRS = {
+  title: {
+    text: 'xAxisTitleText',
+    font: { family: 'titleFont', size: 'axesTitleFontSize' }
+  },
+  tickfont: { family: 'titleFont', size: 'axesTitleFontSize' }
+}
+const Y_AXIS_ATTRS = {
+  title: {
+    text: 'yAxisTitleText',
+    font: { family: 'titleFont', size: 'axesTitleFontSize' }
+  },
+  tickfont: { family: 'titleFont', size: 'axesTitleFontSize' }
+}
+
 const getWindowSize = function () {
   return { width: dscc.getWidth(), height: dscc.getHeight() }
 }
 
-const getDefaultColors = function (numOfColor, theme = null) {
-  if (numOfColor === 1) {
-    return '#00ff00'
-  }
-  else if (theme) {
-    return theme['themeSeriesColor'].map((d) => d['color']).slice(0, numOfColor)
+const getDefaultColors = function (numOfColor, themeSeries = null) {
+  if (themeSeries) {
+    return themeSeries.slice(0, numOfColor)
   }
   else {
     return ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
       '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'].slice(0, numOfColor)
+  }
+}
+
+const assignTitleStyle = function (mapAttr, style) {
+  for (let a in mapAttr) {
+    if (typeof mapAttr[a] === 'string' && style[mapAttr[a]]) {
+      mapAttr[a] = style[mapAttr[a]]['value'] ? style[mapAttr[a]]['value'] : style[mapAttr[a]]['defaultValue'];
+    }
+    else if (typeof mapAttr[a] === 'string') {
+      mapAttr[a] = null
+    }
+    else if (typeof mapAttr === 'object') {
+      assignTitleStyle(mapAttr[a], style)
+    }
   }
 }
 
@@ -39,7 +66,7 @@ const getTraces = function (data, cDim = 'cDim', metric = 'histData') {
         type: 'histogram',
         name: c,
         marker: {
-          color: getDefaultColors(1),
+          color: getDefaultColors(1)[0],
         },
         x: traces[c]
       })
@@ -51,7 +78,7 @@ const getTraces = function (data, cDim = 'cDim', metric = 'histData') {
       type: 'histogram',
       name: '',
       marker: {
-        color: getDefaultColors(1),
+        color: getDefaultColors(1)[0],
       },
       x: data.map((row) => row[metric][0])
     }]
@@ -61,38 +88,36 @@ const getTraces = function (data, cDim = 'cDim', metric = 'histData') {
 
 // write viz code here
 const drawViz = (records) => {
-  console.time("test_timer");
 
   // create chart space
   const { width, height } = getWindowSize();
-  console.log(width, height);
-  var dataviz = document.getElementById('my_dataviz')
+  var dataviz = document.getElementById('my_dataviz');
   if (!dataviz) {
     dataviz = document.createElement('div');
     dataviz.setAttribute('id', 'my_dataviz');
-    document.body.appendChild(dataviz);
+    document.body.appendChild(dataviz)
   }
   // process data
   const data = getTraces(records['tables']['DEFAULT']);
 
-  // process style
-  let colorMap = records['style']['colorMap']['value'] ? JSON.parse(records['style']['colorMap']['value']) : null;
-  let opacity = records['style']['opacity']['value'] ? records['style']['opacity']['value'] : records['style']['opacity']['defaultValue']
-  let cats = data.map((d) => d['name'])
+  // process style in data
+  let style = records['style'];
+  let colorMap = style['colorMap']['value'] ? JSON.parse(records['style']['colorMap']['value']) : null;
+  let opacity = style['opacity']['value'] ? records['style']['opacity']['value'] : records['style']['opacity']['defaultValue'];
+
+  let cats = data.map((d) => d['name']);
   if (!colorMap) {
-    let tempColor = getDefaultColors(data.length, records['theme'])
-    colorMap = {}
+    let tempColor = getDefaultColors(data.length, records['theme']['themeSeriesColor'].map((d) => d['color']));
+    colorMap = {};
     cats.forEach((d, i) => { colorMap[cats[i]] = tempColor[i] })
   }
   for (let i in data) {
-    data[i]['marker']['color'] = colorMap[data[i]['name']]
+    data[i]['marker']['color'] = colorMap[data[i]['name']];
     data[i]['opacity'] = opacity
   }
-
   // layout
   const layout = {
     barmode: 'overlay',
-    yaxis: { title: 'Count' },
     // width: width,
     height: height,
     margin: {
@@ -101,20 +126,22 @@ const drawViz = (records) => {
       b: 0.05 * height,
       t: 0.1 * height
     }
-  }
+  };
 
-  // title
-  if (records['style']['titleText']['value']) {
-    layout['title'] = {
-      text: records['style']['titleText']['value'],
-      x: 0.05,
-    }
-  }
+  // style
+  layout['title'] = TITLE_ATTRS;
+  assignTitleStyle(TITLE_ATTRS, style);
 
+  layout['xaxis'] = X_AXIS_ATTRS;
+  assignTitleStyle(X_AXIS_ATTRS, style);
+
+  layout['yaxis'] = Y_AXIS_ATTRS;
+  assignTitleStyle(Y_AXIS_ATTRS, style);
 
   // plot
+  console.log(records.interactions, records.colorMap)
   Plotly.newPlot(dataviz, data, layout, { responsive: true });
-  console.timeEnd("test_timer");
+
 };
 
 
