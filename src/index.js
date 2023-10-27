@@ -37,7 +37,7 @@ const getDefaultColors = function (numOfColor, themeSeries = null) {
   }
 }
 
-const assignTitleStyle = function (mapAttr, style) {
+const assignStyle = function (mapAttr, style) {
   for (let a in mapAttr) {
     if (typeof mapAttr[a] === 'string' && style[mapAttr[a]]) {
       mapAttr[a] = style[mapAttr[a]]['value'] ? style[mapAttr[a]]['value'] : style[mapAttr[a]]['defaultValue'];
@@ -46,7 +46,7 @@ const assignTitleStyle = function (mapAttr, style) {
       mapAttr[a] = null
     }
     else if (typeof mapAttr === 'object') {
-      assignTitleStyle(mapAttr[a], style)
+      assignStyle(mapAttr[a], style)
     }
   }
 }
@@ -130,13 +130,13 @@ const drawViz = (records) => {
 
   // style
   layout['title'] = TITLE_ATTRS;
-  assignTitleStyle(TITLE_ATTRS, style);
+  assignStyle(TITLE_ATTRS, style);
 
   layout['xaxis'] = X_AXIS_ATTRS;
-  assignTitleStyle(X_AXIS_ATTRS, style);
+  assignStyle(X_AXIS_ATTRS, style);
 
   layout['yaxis'] = Y_AXIS_ATTRS;
-  assignTitleStyle(Y_AXIS_ATTRS, style);
+  assignStyle(Y_AXIS_ATTRS, style);
 
   // plot
   console.log(records.interactions, records.colorMap)
