@@ -123,7 +123,7 @@ const drawViz = (records) => {
     margin: {
       l: 0.1 * width,
       r: 0.05 * width,
-      b: 0.05 * height,
+      b: 0.1 * height,
       t: 0.1 * height
     }
   };
