@@ -1,0 +1,105 @@
+{
+    "reportId": "65178530-9d32-4a21-b265-0844649563e3",
+    "reportRequest": {
+        "componentConfig": [],
+        "chartCondition": [],
+        "conceptDefs": [],
+        "propertyConfig": {
+            "reportProperty": {
+                "filters": [],
+                "globalObjectPosition": 2,
+                "themeConfig": "t-default",
+                "coordinatedColoring": 3
+            }
+        },
+        "attributeConfig": {
+            "reportAttribute": {
+                "datasourceConfigVersion": 2,
+                "displayConfigVersion": 0,
+                "height": 900,
+                "width": 1200,
+                "viewModeHeader": 0,
+                "viewModeNav": 1,
+                "viewModeScale": 0,
+                "viewModeMargin": true,
+                "snapMode": 1,
+                "crossFilterByDefault": true,
+                "showNavigationInEditMode": true,
+                "showNavigationInEmbeddingMode": true
+            }
+        },
+        "resource": {
+            "datasourceAlias": [
+                {
+                    "datasourceId": "d6bdda62-406e-4b58-8a46-ea9ede4de413",
+                    "alias": "ds0"
+                }
+            ],
+            "parameterResource": [],
+            "unifiedParameterResource": [],
+            "colorMappingList": {
+                "colorMappingConfig": [
+                    {
+                        "colorMapping": [
+                            {
+                                "color": "#f10096",
+                                "colorType": {
+                                    "color": "#f10096"
+                                },
+                                "key": {
+                                    "value": "0-14"
+                                }
+                            },
+                            {
+                                "color": "#00b6cb",
+                                "colorType": {
+                                    "color": "#00b6cb",
+                                    "opacity": 1
+                                },
+                                "key": {
+                                    "value": "15-24"
+                                }
+                            },
+                            {
+                                "color": "#f10096",
+                                "colorType": {
+                                    "color": "#f10096",
+                                    "opacity": 1
+                                },
+                                "key": {
+                                    "value": "25-34"
+                                }
+                            },
+                            {
+                                "color": "#f66d00",
+                                "colorType": {
+                                    "color": "#f66d00",
+                                    "opacity": 1
+                                },
+                                "key": {
+                                    "value": "35+"
+                                }
+                            }
+                        ],
+                        "colorCollectionIndex": [
+                            {
+                                "collectionId": "Nhóm",
+                                "index": 4
+                            }
+                        ]
+                    }
+                ]
+            },
+            "communityVizResource": [
+                {
+                    "vizId": "gs://my-custom-charts/demo-chart",
+                    "value": [
+                        {}
+                    ]
+                }
+            ]
+        }
+    },
+    "sessionId": "eu3itsz5ad",
+    "version": 1698377597580
+}

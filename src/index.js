@@ -5,7 +5,7 @@ const Plotly = require('plotly.js-dist');
 
 // change this to 'true' for local development
 // change this to 'false' before deploying
-export const LOCAL = false;
+export const LOCAL = true;
 
 const TITLE_ATTRS = { text: 'titleText', font: { family: 'titleFont', size: 'titleFontSize' } }
 const X_AXIS_ATTRS = {
@@ -27,6 +27,13 @@ const getWindowSize = function () {
   return { width: dscc.getWidth(), height: dscc.getHeight() }
 }
 
+/**
+ * get color from datastudio theme if themeSeries is specified, otherwise return color from plotly theme
+ * 
+ * @param {int} numOfColor 
+ * @param {Array} themeSeries Theme from datastudio
+ * @returns 
+ */
 const getDefaultColors = function (numOfColor, themeSeries = null) {
   if (themeSeries) {
     return themeSeries.slice(0, numOfColor)
@@ -86,6 +93,78 @@ const getTraces = function (data, cDim = 'cDim', metric = 'histData') {
 }
 
 
+class Data {
+  constructor(raw, cDim = null, metric = null) {
+    this.raw = raw;
+    this.cDim = cDim;
+    this.metric = metric;
+    this.traces = this._parseData(this.cDim, this.metric);
+    this.length = this.traces.length;
+    this.cats = this.traces.map((d) => d['name']);
+    this.elements = null;
+    this.selectedTraces = [];
+    for (let i in this.length) { this.selectedTraces.push(true) }
+  }
+  _parseData(cDim = 'cDim', metric = 'histData') {
+    if (this.raw[0] && this.raw[0][cDim]) {
+      const traces = {}
+      this.raw.forEach((row) => {
+        if (row[cDim] in traces) { traces[row[cDim]].push(row[metric][0]) }
+        else { traces[row[cDim]] = [row[metric][0]] }
+      }
+      )
+      const res = []
+
+      for (let c in traces) {
+        res.push({
+          type: 'histogram',
+          name: c,
+          marker: {
+            color: getDefaultColors(1)[0],
+          },
+          x: traces[c]
+        })
+      }
+      return res
+    }
+    else {
+      return [{
+        type: 'histogram',
+        name: '',
+        marker: {
+          color: getDefaultColors(1)[0],
+        },
+        x: this.raw.map((row) => row[metric][0])
+      }]
+    }
+  }
+
+  assignColorMap(colorMap, themeSeries) {
+
+    if (!colorMap) {
+      let tempColor = getDefaultColors(this.length, themeSeries);
+      colorMap = {};
+      this.cats.forEach((d, i) => { colorMap[this.cats[i]] = tempColor[i] })
+    }
+    for (let i in this.traces) {
+      this.traces[i]['marker']['color'] = colorMap[this.traces[i]['name']];
+    }
+  }
+
+  assignOpacity(opacity) {
+    for (let i in this.traces) {
+      this.traces[i]['opacity'] = opacity
+    }
+  }
+
+  setFocusTrace(idx) {
+    for (let i in this.length) {
+      this.selectedTraces[i] = false
+    }
+    this.selectedTraces[idx] = true
+  }
+}
+
 // write viz code here
 const drawViz = (records) => {
 
@@ -98,25 +177,18 @@ const drawViz = (records) => {
     document.body.appendChild(dataviz)
   }
   // process data
-  const data = getTraces(records['tables']['DEFAULT']);
+  const data = new Data(records['tables']['DEFAULT'], 'cDim', 'histData');
 
   // process style in data
   let style = records['style'];
   let colorMap = style['colorMap']['value'] ? JSON.parse(records['style']['colorMap']['value']) : null;
   let opacity = style['opacity']['value'] ? records['style']['opacity']['value'] : records['style']['opacity']['defaultValue'];
 
-  let cats = data.map((d) => d['name']);
-  if (!colorMap) {
-    let tempColor = getDefaultColors(data.length, records['theme']['themeSeriesColor'].map((d) => d['color']));
-    colorMap = {};
-    cats.forEach((d, i) => { colorMap[cats[i]] = tempColor[i] })
-  }
-  for (let i in data) {
-    data[i]['marker']['color'] = colorMap[data[i]['name']];
-    data[i]['opacity'] = opacity
-  }
+  data.assignColorMap(colorMap, records['theme']['themeSeriesColor'].map((d) => d['color']));
+  data.assignOpacity(opacity)
   // layout
   const layout = {
+    showlegend: true,
     barmode: 'overlay',
     // width: width,
     height: height,
@@ -140,8 +212,12 @@ const drawViz = (records) => {
 
   // plot
   console.log(records.interactions, records.colorMap)
-  Plotly.newPlot(dataviz, data, layout, { responsive: true });
+  Plotly.newPlot(dataviz, data.traces, layout, { responsive: true });
+  dataviz.on('plotly_legenddoubleclick', function (event) {
+    console.log(event);
+  })
 
+  data.elements = document.getElementsByClassName('traces');
 };
 
 

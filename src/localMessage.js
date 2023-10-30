@@ -156,7 +156,7 @@ message['style'] = {
     defauleValue: ""
   },
   opacity: {
-    value: 1.,
+    value: 0.6,
     defaultValue: 1.
   },
   titleText: {
@@ -188,7 +188,7 @@ for (let i = 0; i < n; i++) {
   message.tables.DEFAULT.push({
     // xDim: [dateToString(new Date(i * 24 * 3600000 + 1697414400000))],
     xDim: [Math.random() * 100, Math.random() * 100, Math.random() * 100],
-    // cDim: [catValues[Math.floor(Math.random() * catValues.length)]],
+    cDim: [catValues[Math.floor(Math.random() * catValues.length)]],
     histData: [Math.random() * 100],
   })
 };
