@@ -181,6 +181,49 @@ message['style'] = {
   titleFont: {
     value: 'arial',
     defaultValue: 'arial'
+  },
+  highlight: {
+    value: true,
+    defaultValue: false
+  }
+}
+
+message['fields'] = {
+  "xDim": [
+    {
+      "id": "qt_70ixw124ad",
+      "name": "ad_group_id",
+      "type": "NUMBER",
+      "concept": "DIMENSION"
+    }],
+  "cDim": [
+    {
+      "id": "qt_t60ddaz5ad",
+      "name": "channel",
+      "type": "TEXT",
+      "concept": "DIMENSION"
+    }
+  ],
+  "histData": [
+    {
+      "id": "qt_invalid",
+      "name": "cost",
+      "type": "NUMBER",
+      "concept": "METRIC"
+    }
+  ]
+}
+
+
+message['interactions'] = {
+  filter: {
+    value: {
+      type: "FILTER",
+      data: { values: [['a'], ['b']] }
+    },
+    "supportedActions": [
+      "FILTER"
+    ]
   }
 }
 const catValues = ['a', 'b', 'c'];

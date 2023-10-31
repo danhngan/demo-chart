@@ -90,5 +90,13 @@
         }
       ]
     }
+  ],
+  "interactions": [
+    {
+      "id": "filter",
+      "supportedActions": [
+        "FILTER"
+      ]
+    }
   ]
 }

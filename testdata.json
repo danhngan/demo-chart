@@ -8109,7 +8109,7 @@
         ],
         "cDim": [
             {
-                "id": "qt_vfxl7x24ad",
+                "id": "qt_t60ddaz5ad",
                 "name": "channel",
                 "type": "TEXT",
                 "concept": "DIMENSION"
@@ -8130,10 +8130,10 @@
             "defaultValue": ""
         },
         "opacity": {
-            "value": 0.6
+            "value": 0.7
         },
         "titleText": {
-            "value": "",
+            "value": "Phan bo chi tieu ads",
             "defaultValue": ""
         },
         "titleFontSize": {
@@ -8332,6 +8332,13 @@
             "color": "#d1d1d1"
         }
     },
-    "interactions": {},
+    "interactions": {
+        "filter": {
+            "value": {},
+            "supportedActions": [
+                "FILTER"
+            ]
+        }
+    },
     "colorMap": {}
 }
