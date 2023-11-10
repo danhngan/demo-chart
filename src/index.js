@@ -71,6 +71,9 @@ class Data {
   assignNewData(raw) {
     this.raw = raw
     this.tableRaw = raw['tables']['DEFAULT'];
+    if (this.tableRaw[0]['cDim']) {
+      this.cDim = 'cDim'
+    }
     this.cDimFieldId = this.getCDimFieldId();
     this.filter = this.getFilter();
     this.traces = this._parseData(this.cDim, this.metric);
@@ -231,7 +234,7 @@ const processLegendClick = function (data, queue) {
   }
 }
 
-const data = new Data('cDim', 'histData')
+const data = new Data(null, 'histData')
 
 // write viz code here
 const drawViz = function (records) {
@@ -258,12 +261,14 @@ const drawViz = function (records) {
 
   // plot
   const queueMouseEvent = new MouseEventHandler();
-  Plotly.newPlot(dataviz, data.traces, layout, { responsive: true });
+  Plotly.newPlot(dataviz, data.traces, layout, {
+    responsive: true,
+    modeBarButtonsToRemove: ['toImage', 'select2d', 'lasso2d']
+  });
   data.setElements(document.getElementsByClassName('traces'));
   dataviz.on('plotly_legendclick', processLegendClick(data, queueMouseEvent))
 };
 
-console.log('check if rerun')
 // renders locally
 if (LOCAL) {
   drawViz(local.message);
